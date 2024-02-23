@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from collections import Counter
 
 @dataclass
 class File:
@@ -13,21 +14,52 @@ class File:
 Task 1
 """
 def leafFiles(files: list[File]) -> list[str]:
-    return []
+    leafFiles = []
+    parentFiles = set()
+    for file in files:
+        if file.parent != -1:
+            parentFiles.add(file.parent)
+    
+    for file in files:
+        if file.id not in parentFiles:
+            leafFiles.append(file.name)
+
+    return leafFiles
 
 
 """
 Task 2
 """
 def kLargestCategories(files: list[File], k: int) -> list[str]:
-    return []
+    categoryCount = Counter()
+    for file in files:
+        categoryCount.update(file.categories)
+    categoryCount = sorted(categoryCount.keys(),
+                           key=lambda x: (-categoryCount[x], x))
+
+    return categoryCount[:k]
 
 
 """
 Task 3
 """
 def largestFileSize(files: list[File]) -> int:
-    return 0
+    if not files:
+        return 0
+    
+    largestSize = 0
+    for file in files:
+        currentFileSize = fileSize(file, files)
+        largestSize = max(largestSize, currentFileSize)
+    
+    return largestSize
+
+def fileSize(file: File, files: list[File]) -> int:
+    totalSize = file.size
+
+    for child in [child for child in files if child.parent == file.id]:
+        totalSize += fileSize(child, files)
+    return totalSize
 
 
 if __name__ == '__main__':

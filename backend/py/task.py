@@ -45,6 +45,7 @@ Task 3
 """
 def largestFileSize(files: list[File]) -> int:
     if not files:
+        print("lol")
         return 0
     
     largestSize = 0
@@ -77,6 +78,7 @@ if __name__ == '__main__':
         File(144, "Spreadsheet2.xlsx", ["Documents", "Excel"], 3, 2048),
         File(233, "Folder3", ["Folder"], -1, 4096),
     ]
+    testFiles2 = []
 
     assert sorted(leafFiles(testFiles)) == [
         "Audio.mp3",
@@ -95,3 +97,4 @@ if __name__ == '__main__':
     ]
 
     assert largestFileSize(testFiles) == 20992
+    assert largestFileSize(testFiles2) == 0

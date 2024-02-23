@@ -45,7 +45,6 @@ Task 3
 """
 def largestFileSize(files: list[File]) -> int:
     if not files:
-        print("lol")
         return 0
     
     largestSize = 0
